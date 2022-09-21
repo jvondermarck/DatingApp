@@ -1,0 +1,22 @@
+<div class="text-center container">
+    <div *ngIf="!registerMode" style="text-align: center;">
+        <h1>Find your match</h1>
+        <p class="lead col-5 mx-auto">Come on in to view your matches... all you need to do is sign up to find your life of your life buddy !</p>
+        <div class="text-center">
+            <button type="button" (click)="registerToggle()" class="btn btn-primary" style="background-color: #712cf9;">Register</button>
+            <button type="button" style="margin-left: 10px" class="btn btn-outline-secondary">Learn more</button>
+        </div>
+    </div>
+    <div *ngIf="registerMode" class="container">
+        <div class="row justify-content-center">
+            <div class="col-4">
+                <!-- [usersFromHomeComponent]="users" -->
+                <!-- ="users" ==> refer to the property in the home.component.ts  -->
+                <!-- we send to our child a value and our child will retrieve it with @Input -->
+
+                <!-- we retrieve data from the child to the parent (me) with the call of cancelRegisterMode(and we pass the event inside the method call) -->
+                <app-register (cancelRegister)="cancelRegisterMode($event)"></app-register>
+            </div>
+        </div>
+    </div>
+</div>
