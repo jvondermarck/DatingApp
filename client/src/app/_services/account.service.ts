@@ -11,6 +11,7 @@ export class AccountService {
   baseUrl = 'https://localhost:5001/api/';
   private currentUserSource = new ReplaySubject<User>(1); // a buffer object, store ONE value = ONE user, either it's null or it it the current user
   currentUser$ = this.currentUserSource.asObservable(); // dollar sign bc it's convention of observable
+  userName: string;
 
   constructor(private http: HttpClient) { }
 
@@ -22,6 +23,7 @@ export class AccountService {
         if(user) {
           localStorage.setItem('user', JSON.stringify(user)) // take the object and string it to JSON + with a key value of 'user'
           this.currentUserSource.next(user);
+          this.userName = JSON.parse(localStorage.getItem('user')).username;
         }
       })
     )
