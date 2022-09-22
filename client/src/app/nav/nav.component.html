@@ -1,11 +1,13 @@
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
 
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">
-        <img src="../../assets/img/heart.png" alt="Bootstrap" width="25" height="24">
+        <img class="static" width="45" height="40" src="https://i.pinimg.com/originals/49/6c/f5/496cf59cb7144e64c3e2e3efb958c6fa.gif">
+        <img class="active" src="../../assets/img/heart.png" width="35" height="35">
       </a>
       <a class="navbar-brand" routerLink='/' routerLinkActive='active'>The Dating App</a>
+      <a class="nav-link" routerLinkActive='active' aria-current="page" routerLink='/errors'>Errors</a>
 
       <!-- Step 3: Toggle the value of the property when the toggler button is clicked. -->
       <button class="navbar-toggler" type="button" (click)="isMenuCollapsed = !isMenuCollapsed"><span class="navbar-toggler-icon"></span></button>
