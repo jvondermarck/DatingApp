@@ -2,13 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ReplaySubject } from 'rxjs';
 import {map} from 'rxjs/operators'
+import { environment } from 'src/environments/environment';
 import { User } from '../_models/user';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AccountService {
-  baseUrl = 'https://localhost:5001/api/';
+  baseUrl = environment.apiUrl; // take the localhost URL definied in environment file
   private currentUserSource = new ReplaySubject<User>(1); // a buffer object, store ONE value = ONE user, either it's null or it it the current user
   currentUser$ = this.currentUserSource.asObservable(); // dollar sign bc it's convention of observable
   userName: string;

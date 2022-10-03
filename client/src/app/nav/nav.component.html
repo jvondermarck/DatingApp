@@ -26,37 +26,35 @@
             </li>
           </ng-container>
         </ul>
-      </div>
-      
+        <!-- async to automatically unsuscribe to the observable if our nav componnet is no longer visible -->
+        <div *ngIf="(accountService.currentUser$ | async) as user" ngbDropdown class="dropdown">
+          <button ngbDropdownToggle class="btn btn-light" type="button" id="dropdownMenuButton1" aria-expanded="false">
+            Welcome {{user.username | titlecase}}
+          </button>
+          <ul ngbDropdownMenu aria-labelledby="dropdownMenuButton1">
+            <li><a ngbDropdownItem href="#">Edit profile</a></li>
+            <div class="dropdown-divider"></div>
+            <li><a ngbDropdownItem href="#" (click)="logout()">Logout</a></li>
+          </ul>
+        </div>
 
-      <!-- async to automatically unsuscribe to the observable if our nav componnet is no longer visible -->
-      <div *ngIf="(accountService.currentUser$ | async) as user" ngbDropdown class="dropdown">
-        <button ngbDropdownToggle class="btn btn-light" type="button" id="dropdownMenuButton1" aria-expanded="false">
-          Welcome {{user.username | titlecase}}
-        </button>
-        <ul ngbDropdownMenu aria-labelledby="dropdownMenuButton1">
-          <li><a ngbDropdownItem href="#">Edit profile</a></li>
-          <div class="dropdown-divider"></div>
-          <li><a ngbDropdownItem href="#" (click)="logout()">Logout</a></li>
-        </ul>
+        <!-- ngForm means that now it is an angular form -->
+        <form class="d-none d-md-block" *ngIf="(accountService.currentUser$ | async) === null" #loginForm="ngForm" class="d-flex" (ngSubmit)="login()" autocomplete="off">
+          <input 
+            name="username"
+            [(ngModel)]="model.username"
+            class="form-control me-2" 
+            type="search" 
+            placeholder="Username">
+          <input 
+            name="password"
+            [(ngModel)]="model.password"
+            class="form-control me-2" 
+            type="password" 
+            placeholder="Password">
+          <button class="btn btn-outline-dark" type="submit">Login</button>
+        </form>
       </div>
-
-      <!-- ngForm means that now it is an angular form -->
-      <form *ngIf="(accountService.currentUser$ | async) === null" #loginForm="ngForm" class="d-flex" (ngSubmit)="login()" autocomplete="off">
-        <input 
-          name="username"
-          [(ngModel)]="model.username"
-          class="form-control me-2" 
-          type="search" 
-          placeholder="Username">
-        <input 
-          name="password"
-          [(ngModel)]="model.password"
-          class="form-control me-2" 
-          type="password" 
-          placeholder="Password">
-        <button class="btn btn-outline-dark" type="submit">Login</button>
-      </form>
     </div>
     
   </nav>
