@@ -1,0 +1,8 @@
+@media (max-width: 800px) {
+    /*By default, containers are only full-width on xs screens. 
+    This makes them full-width om sm screens as well*/
+    /* .card-img-top img-thumbnail {
+        width: 20%;
+        height: 20%;
+    } */
+  }

@@ -32,7 +32,7 @@
             Welcome {{user.username | titlecase}}
           </button>
           <ul ngbDropdownMenu aria-labelledby="dropdownMenuButton1">
-            <li><a ngbDropdownItem href="#">Edit profile</a></li>
+            <li><a routerLink="/member/edit" ngbDropdownItem href="#">Edit profile</a></li>
             <div class="dropdown-divider"></div>
             <li><a ngbDropdownItem href="#" (click)="logout()">Logout</a></li>
           </ul>

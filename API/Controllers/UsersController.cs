@@ -1,19 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using API.Data;
 using API.DTOs;
-using API.Entities;
 using API.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace API.Controllers
 {
-   // [Authorize] // need to be authorized for each methods
+    // [Authorize] // need to be authorized for each methods
     public class UsersController : BaseApiController
     {
         // private readonly DataContext _context;
@@ -45,6 +39,20 @@ namespace API.Controllers
         public async Task<MemberDto> GetUser(string username)
         {
             return await _userRepository.GetMemberAsync(username);
+        }
+
+        [HttpPut]
+        public async Task<ActionResult> UpdateUser(MemberUpdateDto memberUpdateDto) 
+        {
+            // should give us the user username from the token that the API used to authenticate this user 
+            var username = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var user = await _userRepository.GetUserByUsernameAsync(username);
+
+            _mapper.Map(memberUpdateDto, user);
+            _userRepository.Update(user);
+
+            if(await _userRepository.SaveAllSync()) return NoContent();
+            return BadRequest("Failed to update user.");
         }
     }  
 }
