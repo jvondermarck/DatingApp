@@ -14,11 +14,19 @@
     font-weight: bold;
 }
 
+#photo_user {
+    max-height: 50px;
+    border: 2px solid #fff;
+    border-radius: 25px;
+    display: inline;
+    margin-right: 20px;
+  }
+
 .static {
     position:absolute;
     background: rgba(112.520718,44.062154,249.437846, 1);
-  }
+}
   
-  .static:hover {
+.static:hover {
     opacity:0;
-  }
+}

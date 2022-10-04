@@ -22,8 +22,7 @@ export class AccountService {
       map((response: User) => { // response from type "User" from the _models/User.ts interface
         const user = response;
         if(user) {
-          localStorage.setItem('user', JSON.stringify(user)) // take the object and string it to JSON + with a key value of 'user'
-          this.currentUserSource.next(user);
+          this.setCurrentUser(user);
           this.userName = JSON.parse(localStorage.getItem('user')).username;
         }
       })
@@ -34,14 +33,14 @@ export class AccountService {
     return this.http.post(this.baseUrl + 'account/register', model).pipe(
       map((user: User) => {
         if(user) {
-          localStorage.setItem('user', JSON.stringify(user))
-          this.currentUserSource.next(user);
+          this.setCurrentUser(user);
         }
       })
     )
   }
 
   setCurrentUser(user: User) {
+    localStorage.setItem('user', JSON.stringify(user)) // // take the object and string it to JSON + with a key value of 'user'
     this.currentUserSource.next(user);
   }
 
