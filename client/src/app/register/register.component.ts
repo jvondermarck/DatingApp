@@ -1,6 +1,8 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ToastrService } from 'ngx-toastr';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { AccountService } from '../_services/account.service';
+import { ToastrService } from 'ngx-toastr';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -8,20 +10,44 @@ import { AccountService } from '../_services/account.service';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
-  // @Input() usersFromHomeComponent: any; // get this data from our parent which is home component
-  @Output() cancelRegister = new EventEmitter(); // emeting events - send data from child to parent
+  @Output() cancelRegister = new EventEmitter();
+  registerForm: FormGroup;
+  maxDate: Date;
+  validationErrors: string[] = [];
 
-  model: any = {};
-
-  constructor(private accountService: AccountService, private toastr: ToastrService) { }
+  constructor(private accountService: AccountService, private toastr: ToastrService, 
+    private fb: FormBuilder, private router: Router) { }
 
   ngOnInit(): void {
+    this.intitializeForm();
+    this.maxDate = new Date();
+    this.maxDate.setFullYear(this.maxDate.getFullYear()-18);
+  }
+
+  intitializeForm() {
+    this.registerForm = this.fb.group({
+      gender: ['male'],
+      username: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
+      knownAs: ['', Validators.required],
+      dateOfBirth: ['', Validators.required],
+      city: ['', Validators.required],
+      country: ['', Validators.required],
+      password: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(20)]],
+      confirmPassword: ['', [Validators.required, this.matchValues('password')]]
+    })
+  }
+
+  matchValues(matchTo: string): ValidatorFn {
+    return (control: AbstractControl) => {
+      return control?.value === control?.parent?.controls[matchTo].value 
+        ? null : {isMatching: true}
+    }
   }
 
   register() {
-    this.accountService.register(this.model).subscribe({
-      next: (response:any) => {console.log(response); this.cancel(); },
-      error: (error:any) => {console.log(error); this.toastr.error(error.error)}
+    this.accountService.register(this.registerForm.value).subscribe({
+      next: response =>  this.router.navigateByUrl('/members'),
+      error: error => this.validationErrors = error
     })
   }
 

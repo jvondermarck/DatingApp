@@ -28,9 +28,9 @@
         </ul>
         <!-- async to automatically unsuscribe to the observable if our nav componnet is no longer visible -->
         <div *ngIf="(accountService.currentUser$ | async) as user" ngbDropdown class="dropdown">
-          <img id="photo_user" src="{{user.photoUrl || './assets/user.png'}}" alt="{{user.username}}">
+          <img id="photo_user" src="{{user.photoUrl || './assets/img/user.png'}}" alt="{{user.username}}">
           <button ngbDropdownToggle class="btn btn-light" type="button" id="dropdownMenuButton1" aria-expanded="false">
-            Welcome {{user.username | titlecase}}
+            Welcome {{user.knownAs | titlecase}}
           </button>
           <ul ngbDropdownMenu aria-labelledby="dropdownMenuButton1">
             <li><a routerLink="/member/edit" ngbDropdownItem href="#">Edit profile</a></li>
