@@ -22,8 +22,21 @@ namespace API.Services
         public string CreateToken(AppUser user)
         {
             var claims = new List<Claim>{
-                new Claim(JwtRegisteredClaimNames.NameId, user.UserName)
+                new Claim(JwtRegisteredClaimNames.NameId, user.Id.ToString()), // "nameid": "1",
+                new Claim(JwtRegisteredClaimNames.UniqueName, user.UserName)  // "unique_name": "Lisa"
             };
+
+            // The token will contains nameid and unique_name
+            // PAYLOAD:DATA
+            // "nameid": "1",
+            // "unique_name": "Lisa"
+            // {
+            // "nameid": "1",
+            // "unique_name": "Lisa",
+            // "nbf": 1665055800,
+            // "exp": 1665660600,
+            // "iat": 1665055800
+            // }
 
             var creds = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512Signature);
 

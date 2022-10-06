@@ -1,6 +1,7 @@
 using API.DTOs;
 using API.Entities;
 using API.Extensions;
+using API.Helpers;
 using API.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -26,13 +27,19 @@ namespace API.Controllers
 
         [HttpGet] // When <Task> come back, we return the list of Users (asynchronous)
         [AllowAnonymous] // everyone can access to it without being authenticated
-        public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers()
+        // bc we do a GET/ api/users without any query for the UserParams, we need to specify the [FromQuery] to make it works
+        public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers([FromQuery] UserParams userParams)
         {
             // old : 
             // var users = await _userRepository.GetUsersAsync();
             // var usersToReturn = _mapper.Map<IEnumerable<MemberDto>>(users);
-
-            var users = await _userRepository.GetMembersAsync();
+            var user = await _userRepository.GetUserByUsernameAsync(User.GetUsername());
+            userParams.CurrentUsername = User.GetUsername();
+            if(string.IsNullOrEmpty(userParams.Gender)){
+                userParams.Gender = user.Gender == "male" ? "female" : "male";
+            }
+            var users = await _userRepository.GetMembersAsync(userParams);
+            Response.AddPaginationHeader(users.CurrentPage, users.PageSize, users.TotalCount, users.TotalPages);
             return Ok(users);
             // old :return await _context.Users.ToListAsync(); // return list of users asynchronous (we wait to fetch all data)
         }

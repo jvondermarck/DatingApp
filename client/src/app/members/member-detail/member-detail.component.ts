@@ -5,6 +5,7 @@ import { MembersService } from 'src/app/_services/members.service';
 import { NgxGalleryImage } from '@kolkov/ngx-gallery';
 import { NgxGalleryOptions } from '@kolkov/ngx-gallery';
 import { NgxGalleryAnimation } from '@kolkov/ngx-gallery';
+import { TimeagoModule } from 'ngx-timeago';
 
 @Component({
   selector: 'app-member-detail',

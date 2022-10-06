@@ -2,4 +2,6 @@ export interface User { // will be use to display this in local storage in inspe
     username: string;
     token: string;
     photoUrl: string;
+    knownAs: string;
+    gender: string;
 }
