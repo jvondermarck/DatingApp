@@ -24,11 +24,13 @@ namespace API.Entities
         public string Country { get; set; }
 
         public ICollection<Photo> Photos { get; set; } = new List<Photo>();
+        public ICollection<UserLike> LikedByUsers { get; set; } // list of users that liked the current logged in user
+        public ICollection<UserLike> LikedUsers { get; set; } // list of users that the current logged in user has liked
 
-        public int GetAge()
-        {
-            return DateOfBirth.CalculateAge();
-        }
+        // public int GetAge()
+        // {
+        //     return DateOfBirth.CalculateAge();
+        // }
 
     } 
 }
