@@ -16,6 +16,7 @@ namespace API.Data
 
         public DbSet<AppUser> Users { get; set; } // very important to use to insert, select data, and so on
         public DbSet<UserLike> Likes { get; set; }
+        public DbSet<Message> Messages { get; set; } // table named messages
         protected override void OnModelCreating(ModelBuilder builder) 
         {
             base.OnModelCreating(builder);
@@ -31,6 +32,14 @@ namespace API.Data
             // an user 
             builder.Entity<UserLike>().HasOne(s => s.LikedUser).WithMany(l => l.LikedByUsers)
                 .HasForeignKey(s => s.LikedUserId).OnDelete(DeleteBehavior.Cascade);
+
+
+            // for messages :
+            builder.Entity<Message>().HasOne(s => s.Recipient).WithMany(l => l.MessageReceived)
+                .OnDelete(DeleteBehavior.Restrict); // we don't want to remove the messages 
+
+            builder.Entity<Message>().HasOne(s => s.Sender).WithMany(l => l.MessageSent)
+                .OnDelete(DeleteBehavior.Restrict); 
         }
     }
 }

@@ -6,7 +6,7 @@ import { User } from 'src/app/_models/user';
 import { take } from 'rxjs/operators';
 import { MembersService } from 'src/app/_services/members.service';
 import { Photo } from 'src/app/_models/photo';
-import { Member } from 'src/app/_models/members';
+import { Member } from 'src/app/_models/member';
 
 @Component({
   selector: 'app-photo-editor',

@@ -26,7 +26,8 @@ namespace API.Entities
         public ICollection<Photo> Photos { get; set; } = new List<Photo>();
         public ICollection<UserLike> LikedByUsers { get; set; } // list of users that liked the current logged in user
         public ICollection<UserLike> LikedUsers { get; set; } // list of users that the current logged in user has liked
-
+        public ICollection<Message> MessageSent { get; set; } 
+        public ICollection<Message> MessageReceived { get; set; } 
         // public int GetAge()
         // {
         //     return DateOfBirth.CalculateAge();
